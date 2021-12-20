@@ -1,13 +1,6 @@
 #include <SoftwareSerial.h>
 #include <FastLED.h>
 
-// If true, light modes are changed automatically
-#define AUTO_MODE false
-// If true, uses a random effect on every auto mode change
-#define AUTO_RANDOM true
-// Only effective if the above is true; delay between modes in seconds
-#define AUTO_MODE_DELAY 15
-
 // Length of array divided by length of data type
 #define ARRAY_SIZE(A) (sizeof(A) / sizeof((A)[0]))
 
@@ -17,11 +10,10 @@
 
 // LED strip properties
 #define LED_PIN   5
-#define CLOCK_PIN 6
-#define NUM_LEDS  30
-#define CHIPSET   DOTSTAR
+#define NUM_LEDS  150
+#define CHIPSET   WS2812
 #define FRAMES_PER_SECOND 60
-#define BRIGHTNESS  200
+#define BRIGHTNESS  100
 CRGB leds[NUM_LEDS];
 
 // Light modes
@@ -69,7 +61,7 @@ void sparkle() {
 }
 
 // lists light mode functions
-LightModeList lightModes = { rainbow, sineDot, doubleSine, confetti, sparkle };
+LightModeList lightModes = { sineDot, rainbow, doubleSine, confetti, sparkle };
 
 void setup() {
   delay(3000); // startup delay
@@ -78,11 +70,8 @@ void setup() {
   pinMode(BUTTON_PIN, INPUT_PULLUP);
 
   // FastLED setup
-  FastLED.addLeds<CHIPSET, LED_PIN, CLOCK_PIN>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+  FastLED.addLeds<CHIPSET, LED_PIN, RGB>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(BRIGHTNESS);
-
-  // Setup console communcation
-  Serial.begin(9600);
 }
 
 void loop() {
@@ -98,17 +87,6 @@ void loop() {
   // adapt hue
   EVERY_N_MILLISECONDS(15) {
     hue++;
-  }
-
-  // auto mode
-  if (AUTO_MODE) {
-    EVERY_N_SECONDS(AUTO_MODE_DELAY) {
-      if (AUTO_RANDOM) {
-        currentLightMode = random8(ARRAY_SIZE(lightModes));
-      } else {
-        nextMode();
-      }
-    }
   }
 }
 
