@@ -1,0 +1,4 @@
+{
+  "arduino.commandPath": "arduino-cli",
+  "arduino.path": "/opt/arduino/"
+}
