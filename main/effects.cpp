@@ -27,3 +27,19 @@ void confetti(CRGB leds[], uint8_t hue)
     int pos = random16(LED_NUM);
     leds[pos] += CHSV(qadd8(hue, random8(64)), 200, 255);
 }
+
+void juggle(CRGB leds[], uint8_t hue) {
+  fadeToBlackBy( leds, LED_NUM, 20);
+  for( int i = 0; i < 8; i++) {
+    leds[beatsin16( i+7, 0, LED_NUM-1 )] |= CHSV(hue, 200, 255);
+  }
+}
+
+void bpm(CRGB leds[], uint8_t hue) {
+  uint8_t BeatsPerMinute = 62;
+  CRGBPalette16 palette = PartyColors_p;
+  uint8_t beat = beatsin8( BeatsPerMinute, 64, 255);
+  for( int i = 0; i < LED_NUM; i++) { //9948
+    leds[i] = ColorFromPalette(palette, hue+(i*2), beat-hue+(i*10));
+  }
+}

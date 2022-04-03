@@ -12,13 +12,14 @@ bool led2On = false;
 bool sleeping = false;
 
 typedef void (*LightMode[])(CRGB leds[], uint8_t hue);
-LightMode lightModes = {rainbow, sineDot, doubleSine, confetti};
+// Array of currently enabled light modes
+LightMode lightModes = {rainbow, sineDot, confetti, juggle, bpm};
 
 void setup()
 {
   delay(3000);
-  pinMode(LED2_PIN, OUTPUT);
-  pinMode(BUTTON_PIN, INPUT_PULLUP);
+  // pinMode(LED2_PIN, OUTPUT);
+  // pinMode(BUTTON_PIN, INPUT_PULLUP);
   FastLED.addLeds<LED_CHIPSET, LED_PIN, RGB>(leds, LED_NUM).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(LED_BRIGHTNESS);
 }
@@ -41,7 +42,7 @@ void loop()
   FastLED.setBrightness(led2On ? LED_BRIGHTNESS / 5 : LED_BRIGHTNESS);
   FastLED.show();
   FastLED.delay(1000 / LED_FPS);
-  EVERY_N_MILLISECONDS(15)
+  EVERY_N_MILLISECONDS(7)
   {
     hue++;
   }

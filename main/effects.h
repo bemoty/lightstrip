@@ -19,6 +19,8 @@ void rainbow(CRGB leds[], uint8_t hue);
 void sineDot(CRGB leds[], uint8_t hue);
 void doubleSine(CRGB leds[], uint8_t hue);
 void confetti(CRGB leds[], uint8_t hue);
+void juggle(CRGB leds[], uint8_t hue);
+void bpm(CRGB leds[], uint8_t hue);
 
 class Effect
 {
