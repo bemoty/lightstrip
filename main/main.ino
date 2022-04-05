@@ -19,7 +19,7 @@ void setup()
 {
   delay(3000);
   // pinMode(LED2_PIN, OUTPUT);
-  // pinMode(BUTTON_PIN, INPUT_PULLUP);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
   FastLED.addLeds<LED_CHIPSET, LED_PIN, RGB>(leds, LED_NUM).setCorrection(TypicalLEDStrip);
   FastLED.setBrightness(LED_BRIGHTNESS);
 }
