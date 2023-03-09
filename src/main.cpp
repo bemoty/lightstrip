@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include <SoftwareSerial.h>
 #include <FastLED.h>
 #include "effects.h"
@@ -13,7 +14,10 @@ bool sleeping = false;
 
 typedef void (*LightMode[])(CRGB leds[], uint8_t hue);
 // Array of currently enabled light modes
-LightMode lightModes = {rainbow, sineDot, confetti, juggle, bpm};
+LightMode lightModes = {rainbow, sineDot, confetti, juggle, bpm, plasma};
+
+void nextMode();
+void checkButton();
 
 void setup()
 {
@@ -26,11 +30,15 @@ void setup()
 
 void loop()
 {
-  if (sleeping) {
+  if (sleeping)
+  {
     checkButton();
     return;
-  } else {
-    if (led2On && millis() - led2OnTimestamp >= LED2_TURNOFF_DELAY) {
+  }
+  else
+  {
+    if (led2On && millis() - led2OnTimestamp >= LED2_TURNOFF_DELAY)
+    {
       fill_solid(leds, LED_NUM, CRGB::Black); // turn all leds off
       FastLED.show();
       sleeping = true;
@@ -87,7 +95,8 @@ void checkButton()
     { // button was pressed before
       if (millis() - buttonPressTimestamp >= BUTTON_BOUNCE_DELAY)
       {
-        if (sleeping) {
+        if (sleeping)
+        {
           sleeping = false;
           return;
         }
