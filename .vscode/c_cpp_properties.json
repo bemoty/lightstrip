@@ -8,9 +8,9 @@
         {
             "name": "PlatformIO",
             "includePath": [
-                "/Users/josh/Documents/PlatformIO/Projects/230307-182133-nanoatmega328/include",
-                "/Users/josh/Documents/PlatformIO/Projects/230307-182133-nanoatmega328/src",
-                "/Users/josh/Documents/PlatformIO/Projects/230307-182133-nanoatmega328/.pio/libdeps/nanoatmega328/FastLED/src",
+                "/Users/josh/Documents/dev/personal/lightstrip/include",
+                "/Users/josh/Documents/dev/personal/lightstrip/src",
+                "/Users/josh/Documents/dev/personal/lightstrip/.pio/libdeps/nanoatmega328/FastLED/src",
                 "/Users/josh/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                 "/Users/josh/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
                 "/Users/josh/.platformio/packages/framework-arduino-avr/cores/arduino",
@@ -23,9 +23,9 @@
             "browse": {
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
-                    "/Users/josh/Documents/PlatformIO/Projects/230307-182133-nanoatmega328/include",
-                    "/Users/josh/Documents/PlatformIO/Projects/230307-182133-nanoatmega328/src",
-                    "/Users/josh/Documents/PlatformIO/Projects/230307-182133-nanoatmega328/.pio/libdeps/nanoatmega328/FastLED/src",
+                    "/Users/josh/Documents/dev/personal/lightstrip/include",
+                    "/Users/josh/Documents/dev/personal/lightstrip/src",
+                    "/Users/josh/Documents/dev/personal/lightstrip/.pio/libdeps/nanoatmega328/FastLED/src",
                     "/Users/josh/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                     "/Users/josh/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
                     "/Users/josh/.platformio/packages/framework-arduino-avr/cores/arduino",
@@ -37,7 +37,7 @@
                 ]
             },
             "defines": [
-                "PLATFORMIO=60106",
+                "PLATFORMIO=60109",
                 "ARDUINO_AVR_NANO",
                 "F_CPU=16000000L",
                 "ARDUINO_ARCH_AVR",
@@ -45,8 +45,8 @@
                 "__AVR_ATmega328P__",
                 ""
             ],
-            "cStandard": "c11",
-            "cppStandard": "c++11",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++11",
             "compilerPath": "/Users/josh/.platformio/packages/toolchain-atmelavr/bin/avr-gcc",
             "compilerArgs": [
                 "-mmcu=atmega328p",

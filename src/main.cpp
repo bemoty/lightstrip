@@ -1,7 +1,13 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 #include <FastLED.h>
-#include "effects.h"
+#include <effects.h>
+#include <effects/confetti.h>
+#include <effects/doublesine.h>
+#include <effects/juggle.h>
+#include <effects/plasma.h>
+#include <effects/rainbow.h>
+#include <effects/sinedot.h>
 
 CRGB leds[LED_NUM];
 uint8_t currentLightMode = 0;
@@ -12,10 +18,7 @@ long led2OnTimestamp = 0;       // Saves the relative timestamp of when sleep mo
 bool led2On = false;
 bool sleeping = false;
 
-typedef void (*LightMode[])(CRGB leds[], uint8_t hue);
-// Array of currently enabled light modes
-LightMode lightModes = {rainbow, sineDot, confetti, juggle, bpm, plasma};
-
+void executeMode(uint8_t mode);
 void nextMode();
 void checkButton();
 
@@ -35,19 +38,8 @@ void loop()
     checkButton();
     return;
   }
-  else
-  {
-    if (led2On && millis() - led2OnTimestamp >= LED2_TURNOFF_DELAY)
-    {
-      fill_solid(leds, LED_NUM, CRGB::Black); // turn all leds off
-      FastLED.show();
-      sleeping = true;
-      return;
-    }
-  }
   checkButton();
-  lightModes[currentLightMode](leds, hue);
-  FastLED.setBrightness(led2On ? LED_BRIGHTNESS / 5 : LED_BRIGHTNESS);
+  executeMode(currentLightMode);
   FastLED.show();
   FastLED.delay(1000 / LED_FPS);
   EVERY_N_MILLISECONDS(7)
@@ -61,7 +53,7 @@ void loop()
 */
 void nextMode()
 {
-  currentLightMode = (currentLightMode + 1) % ARRAY_SIZE(lightModes);
+  currentLightMode = (currentLightMode + 1) % EFFECTS_AMOUNT;
 }
 
 /**
@@ -82,10 +74,9 @@ void checkButton()
     }
     if (millis() - buttonPressTimestamp >= LED2_DELAY && !flag)
     {
-      digitalWrite(LED2_PIN, led2On ? LOW : HIGH);
-      led2On = !led2On;
-      led2OnTimestamp = millis();
-      flag = true;
+      fill_solid(leds, LED_NUM, CRGB::Black); // turn all leds off
+      FastLED.show();
+      sleeping = true;
     }
   }
   else
@@ -112,4 +103,28 @@ void checkButton()
     }
   }
   lastButtonState = digitalRead(BUTTON_PIN);
+}
+
+void executeMode(uint8_t mode) {
+  // todo: find better way to solve this
+  switch (mode) {
+    case 0:
+      Confetti().execute(leds, hue);
+      break;
+    case 1:
+      DoubleSine().execute(leds, hue);
+      break;
+    case 2:
+      Juggle().execute(leds, hue);
+      break;
+    case 3:
+      Plasma().execute(leds, hue);
+      break;
+    case 4:
+      Rainbow().execute(leds, hue);
+      break;
+    case 5:
+      SineDot().execute(leds, hue);
+      break;
+  }
 }
